@@ -1,0 +1,19 @@
+<div class="container">
+<div style="display: flex;justify-content:space-between;">
+    <h1>product Section </h1>
+    <div> <a class="btn btn-primary" [routerLink]="['/products/new']">Add New Product</a>
+  
+    </div>
+  
+  </div>
+  <div class="form-group">
+    <input class="form-control" #newquery (keyup)="submit(newquery.value)" (keyup.Enter)="submit(newquery.value)"
+      autofocus type="text" style="width: 50%;" [value]="query" placeholder="Serach for a book">
+  </div>
+  {{newquery.value}}
+  <div class="row">
+    <ng-container *ngFor="let productitem of products">
+    <app-product-item [product]="productitem" class="col-md-4 col-lg-3 col-xs-12 col-sm-6 " style="margin-bottom: 20px;"></app-product-item>
+    </ng-container>
+  </div>
+</div>

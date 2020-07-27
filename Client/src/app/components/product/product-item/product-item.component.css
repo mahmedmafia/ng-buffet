@@ -1,0 +1,6 @@
+.card-img-overlay{
+    display: none;
+}
+.info:hover .card.hoverable{
+    display: block;
+}

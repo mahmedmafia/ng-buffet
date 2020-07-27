@@ -1,0 +1,44 @@
+<div style="width: 100%;">
+    <div class="card" >
+      <img *ngIf="product.Image" class="card-img-top" style="max-height:150px" [src]="product.Image" alt="Card image">
+      <div class="card-body">
+        <div class="card-title d-flex justify-content-between">
+        <h4 class="text-center" style="display: inline-block;margin:0;">{{product.name}}</h4>
+        <div class="h6" style="display: inline-block;margin:auto;margin-bottom:5px;float: right;"><span>quanity:{{product.quantity}}</span></div>
+
+        </div>
+        
+        <!-- <p class="card-text">Price:{{product.price}}$</p> -->
+        <div class="card-img-overlay hoverable" style="padding:5px;" >
+        <div  class="h7 " style="color: white;">
+          <ng-container *ngIf="product.category.length ==0 else elseTemplate">
+            <span class="bg-info" style="color: white;">None </span>
+          </ng-container>
+          <ng-template #elseTemplate>
+          <ng-container *ngFor="let category of product.category" ><span class="bg-info" style="color: white;margin-right:4px ;">{{category.name}} </span></ng-container>
+              
+          </ng-template>
+          
+        </div>
+     
+      </div>
+      
+        <div style="padding:1px;" class="row">
+          <div class="h3 col-md-4 col-xs-3" style="margin:0;padding:0;">
+            <span calss="price">{{product.price}}$ </span>
+  
+            </div>
+          <div class="float-right col-md-8 col-xs-9  d-flex justify-content-between bg-primary" style="padding: 0px;margin:0px;">
+            <button  class="btn btn-primary btn-sm" (click)="addToOrder(q.value)">Add To cart</button> 
+            <form #form="ngForm" style="float: right;width:25%;display:inline-block;margin: auto;">
+              <input type="number" name="q_number" [ngModel]="q_number" #q="ngModel" style="width:100%;" (change)="assignNumber(q.value)">
+            </form>
+            </div>
+         
+        </div>
+      
+        <!-- <a [routerLink]="['/products/' + product.id]" class="btn btn-primary">More Info</a> -->
+        <!-- <button class="btn btn-danger btn-sm" (click)="deleteBook(product.id)">Delete</button> -->
+      </div>
+    </div>
+  </div>

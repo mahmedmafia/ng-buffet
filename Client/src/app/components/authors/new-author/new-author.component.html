@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <h1 class="text-center">Add a New Author</h1>
+    <div class="col-md-12">
+      <div style="width:60%;margin:20px auto">
+        <form #f="ngForm" (ngSubmit)="addAuthor(f)">
+
+          <div class="form-group">
+            <label>first name</label>
+            <input type="text" name="first_name" class="form-control" [ngModel]>
+          </div>
+          <div class="form-group">
+            <label>last name</label>
+            <input type="text" name="last_name" class="form-control" [ngModel]>
+          </div>
+          <div class="form-group">
+            <label>Author Image</label>
+            <input type="file" #file name="Image" class="form-control" (change)="selectImage(file.files)" [ngModel]>
+            <img [src]="imgURL" height="200" *ngIf="imgURL">
+          </div>
+          <div class="form-group">
+            <label>birth Date</label>
+            <input type="date" name="birthDate" class="form-control" [ngModel]>
+          </div>
+          <div class="form-group">
+            <label>birth Date</label>
+            <input type="date" name="deathDate" class="form-control" [ngModel]>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Add Author</button>
+        </form>
+        <a routerLink="['/Books']" class="btn btn-danger btn-block">Go Back</a>
+      </div>
+    </div>
+  </div>
+
+</div>

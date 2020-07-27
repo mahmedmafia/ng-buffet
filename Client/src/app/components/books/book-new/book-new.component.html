@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="row">
+    <h1 class="text-center">Add a New Book</h1>
+    <div class="col-md-12">
+      <div style="width:60%;margin:20px auto">
+        <form [formGroup]="bookForm" (ngSubmit)="AddBook()">
+          <!-- <div class="form-group">
+            <label>Author</label>
+            <select class="form-control" formControlName="author">
+              <option *ngFor="let author of authors" [value]="author.id">{{ author.first_name +' ' +author.last_name}}
+              </option>
+            </select>
+          </div> -->
+          <div class="form-group">
+            <label>Product Name</label>
+            <input type="text" formControlName="name" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Product Image</label>
+            <input type="file" formControlName="Image" class="form-control" (change)="selectImage($event)">
+          </div>
+          <div class="form-group">
+            <label>Product Price</label>
+            <input type="number" formControlName="price" class="form-control">
+          </div>
+          <!-- <div class="form-group">
+            <label>Product Price</label>
+            <textarea type="text" formControlName="summary" class="form-control"></textarea>
+          </div> -->
+
+          <!-- <div class="form-group">
+            <label>Genre</label>
+            
+          </div> -->
+          <button (click)="addGenres()" type="button" class="btn btn-primary">Add product Category</button>
+          <div formArrayName="productCategoryArray">
+            <div *ngFor="let genre of productCategArray.controls;let i=index">
+              <div [formGroupName]="i">
+                <label>category Name:</label>
+                <div style="display: flex;">
+                  <select  class="form-control" (change)="discardgenre($event)" formControlName="id">
+                    <option value="" disabled>select category</option>
+                    <option *ngFor="let genre of genres" [ngValue]="genre.id">{{ genre.name}}
+                    </option>
+                  </select>
+                  <button (click)="removeGenre(i)" class="btn btn-danger">Remove</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Price Category</label>
+            <select class="form-control" formControlName="priceCategory">
+              <option value="" disabled>select category</option>
+              <option *ngFor="let priceCategory of priceCategories" [value]="priceCategory.id">{{ priceCategory.name}}
+              </option>
+            </select>
+          </div>
+          <!-- <div class="form-group">
+            <label>isbn</label>
+            <input type="text" formControlName="isbn" class="form-control">
+          </div> -->
+          <button type="submit" class="btn btn-primary btn-block">Add Product</button>
+        </form>
+        <a routerLink="['/Products']" class="btn btn-danger btn-block">Go Back</a>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,24 @@
+<li class="list-group-item d-flex  align-items-center row text-center" >
+    <div class="col-md-2" style="padding-left:0px;">
+    <img [src]="item.product.Image" style="width:100px;height:100px;">
+</div>
+<div class="col-md-2 ">
+    <h5>{{item.product.name}}</h5>
+
+</div>
+<div class="col-md-2 ">
+    <span class="badge badge-primary badge-pill">{{item.quantitySold}}</span>
+
+</div>
+<div class="col-md-2">
+    <span class="badge badge-primary badge-pill ">{{item.productPrice}}</span>
+
+</div>
+<div class="col-md-2">
+    <span class="badge badge-primary badge-pill ">{{item.TotalPrice}}</span>
+
+</div>
+<div class="col-md-2">
+    <button class="btn btn-danger btn-md" (click)="deleteItem(index)">Delete</button>
+</div>
+</li>
