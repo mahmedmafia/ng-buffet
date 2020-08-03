@@ -1,4 +1,3 @@
-import { priceCategory } from './productstore.service';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
@@ -7,7 +6,8 @@ import { Subject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProductstoreService {
-  BaseUrl = 'http://127.0.0.1:3000/';
+  // BaseUrl = 'http://127.0.0.1:3000/';
+  BaseUrl='';
   ProductsUrl = this.BaseUrl + 'products';
   priceCategoryUrl = this.BaseUrl + 'priceCategory';
   productCategoryUrl = this.BaseUrl + 'productCategory';
@@ -97,13 +97,11 @@ export class ProductstoreService {
 
     this.http.get<Product[]>(this.ProductsUrl, { params: { title: query } })
       .pipe(map(docs => docs['products']), map(this.mapProducts)).subscribe(res => {
-        console.log(res);
         this.ProductsChanged.next(res);
       });
 
   }
   serachProducts(query) {
-    console.log('seraching', query);
     this.getProducts(query);
   }
   getProduct(id) {
@@ -144,9 +142,7 @@ export class ProductstoreService {
       }));
   }
   addProduct(newProduct) {
-    console.log(newProduct.get('productCategory'));
     this.http.post(this.ProductsUrl, newProduct).subscribe(res => {
-      console.log(res);
     });
   }
   deleteProduct(id) {

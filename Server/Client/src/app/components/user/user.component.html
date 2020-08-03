@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="d-flex justify-content-between">
+    <h3>{{ loggedUser.rank }} / {{ loggedUser.email }}</h3>
+    <a [routerLink]="['edit']" class="btn btn-md btn-info">Edit Profile</a>
+  </div>
+  <div class="row">
+      <div class="col-md-8" style="margin: auto;">
+        <ul class="list-group">
+            <li *ngFor="let userCart of carts" class="list-group-item">
+                <p class="mb-2">at  {{ userCart.OrderDate | date:'medium'}}  </p>
+              <ng-container>
+                  <app-user-order-item [cart]="userCart"></app-user-order-item>
+              </ng-container>
+             <h6>Total Price : {{userCart.TotalPrice}}</h6> 
+            </li>
+          </ul>
+
+      </div>
+  </div>
+  
+</div>

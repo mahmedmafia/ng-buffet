@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="row mt-5">
+      <h3 class="text-center">Edit Profile</h3>
+      <div class="col-md-12">
+        <div style="width:60%;margin:20px auto">
+          <form [formGroup]="editUserForm" (ngSubmit)="editUser()">
+           
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" formControlName="email" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>rank</label>
+                <input type="text" formControlName="rank" class="form-control">
+              </div>
+           
+           
+            
+            <button type="submit" class="btn btn-primary btn-block">Edit</button>
+          </form>
+          <a [routerLink]="['/user',loggedUser.id]" class="btn btn-danger btn-block">Go Back</a>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+  

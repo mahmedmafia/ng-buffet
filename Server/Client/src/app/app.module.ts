@@ -16,6 +16,8 @@ import { ProductNewComponent } from './components/product/product-new/product-ne
 import { UserComponent } from './components/user/user.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CartItemComponent } from './components/cart/cart-item/cart-item.component';
+import { EditUserComponent } from './components/user/edit-user/edit-user.component';
+import { UserOrderItemComponent } from './components/user/user-order-item/user-order-item.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +29,9 @@ import { CartItemComponent } from './components/cart/cart-item/cart-item.compone
     ProductNewComponent,
     UserComponent,
     CartComponent,
-    CartItemComponent
+    CartItemComponent,
+    EditUserComponent,
+    UserOrderItemComponent
   ],
   imports: [
     BrowserModule,

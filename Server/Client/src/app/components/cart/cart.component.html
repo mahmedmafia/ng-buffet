@@ -1,0 +1,59 @@
+<div class="container">
+  <h1>Cart</h1>
+  <ng-container *ngIf="orderItems?.length != 0; else elseTemplate">
+    <div class="col-md-8">
+      <ul class="list-group">
+        <div
+          class="d-flex align-items-center row border-primary border-light text-center bg-dark"
+          style="padding: 10px 0px; color: white;"
+        >
+          <div class="col-md-2"></div>
+          <div class="col-md-2">
+            <h5>Product Name</h5>
+          </div>
+          <div class="col-md-2">
+            <h5>quantity Sold</h5>
+          </div>
+          <div class="col-md-2">
+            <h5>product price</h5>
+          </div>
+          <div class="col-md-2">
+            <h5>Total price</h5>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+
+        <ng-container *ngFor="let orderItem of orderItems; let i = index">
+          <app-cart-item [item]="orderItem" [index]="i"></app-cart-item>
+        </ng-container>
+
+        <div
+          class="d-flex align-items-center row border-primary bg-dark text-center text-light"
+        >
+          <div class="col-md-2">
+            <h4>Total Price</h4>
+          </div>
+          <div class="col-md-2"></div>
+          <div class="col-md-2"></div>
+          <div class="col-md-2"></div>
+          <div class="col-md-2">
+            <h5>{{ Cart.TotalPrice }}</h5>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-danger btn-md" style="opacity: 0;">
+              Delete
+            </button>
+          </div>
+        </div>
+      </ul>
+      <h3>Confirm Purchase</h3>
+      <button class="btn btn-lg btn-primary" (click)="confirmOrder()"> Confirm</button>
+    </div>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <h2 class="text-center m-5">
+      You Haven't Orderd Yet!
+      <a class="btn-link" [routerLink]="['/products']">Order Now ? </a>
+    </h2>
+  </ng-template>
+</div>

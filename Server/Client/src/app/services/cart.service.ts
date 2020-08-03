@@ -1,3 +1,5 @@
+import { AuthService } from 'src/app/services/auth.service';
+import { Order } from './cart.service';
 import { HttpClient } from '@angular/common/http';
 import { User } from './auth.service';
 import { Product } from './productstore.service';
@@ -9,8 +11,9 @@ import { Subject, Observable } from 'rxjs';
   providedIn:  'root'
 })
 export class CartService {
-  BaseUrl = 'http: //127.0.0.1: 3000/';
-  OrdersUrl=this.BaseUrl+'Orders';
+  // BaseUrl = 'http://127.0.0.1:3000/';
+  BaseUrl='';
+  OrdersUrl=this.BaseUrl+'orders';
   cart:Order={
     orderItems:[],
     user:null,
@@ -25,16 +28,33 @@ export class CartService {
     this.cart.TotalPrice=this.cart.TotalPrice+(+orderItem.TotalPrice);
     this.cartsChanged.next(this.cart);
   }
-  emptyCart(ordr:Order){
+  emptyCart(){
     this.cart.orderItems=[];
+    this.cart.TotalPrice=0;
     this.cartsChanged.next(this.cart);
   }
   deleteOrderItem(orderItem:OrderItem,index:number){
     this.cart.orderItems.splice(index,1);
-    console.log(index);
     this.cart.TotalPrice=this.cart.TotalPrice-(+orderItem.TotalPrice);
     this.cartsChanged.next(this.cart);
-
+  }
+  confirmOrder(order:Order,user:User){
+    this.user=user;
+    this.cart.user=user;
+    this.cart=order;
+    this.http.post<Order>(this.OrdersUrl,this.cart).subscribe(res=>{
+      if(res['Order']){
+        this.emptyCart();
+        console.log(res);
+      }
+    });
+  }
+  getuserOrder(user:User){
+    return this.http.get<Order[]>(this.OrdersUrl).pipe(map(docs => docs['docs']),map(docs=>{
+      return docs.filter(doc=>{
+        return doc.user==user.id;
+      });
+    }));
   }
 }
 
@@ -53,8 +73,6 @@ export interface OrderItem{
   quantitySold: number;
   productPrice: number;
   TotalPrice: number;
-  order: Order;
-  orderId: string;
 }
 
 export interface Cart{

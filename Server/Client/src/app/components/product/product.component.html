@@ -1,7 +1,8 @@
 <div class="container">
 <div style="display: flex;justify-content:space-between;">
     <h1>product Section </h1>
-    <div> <a class="btn btn-primary" [routerLink]="['/products/new']">Add New Product</a>
+    <div *ngIf="isAdmin"> 
+      <a class="btn btn-primary" [routerLink]="['/products/new']">Add New Product</a>
   
     </div>
   

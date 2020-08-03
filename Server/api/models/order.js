@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const OrderSchema = new Schema({
   _id: Schema.Types.ObjectId,
   orderItems: [{ type: Schema.Types.ObjectId, ref: 'OrderItem' }],
-  OrderDate: { type: Date ,default:Date.now},
+  OrderDate: { type: Date},
   TotalPrice: { type: Number ,default:0},
   user: { type: Schema.Types.ObjectId, ref: 'User' },
 });

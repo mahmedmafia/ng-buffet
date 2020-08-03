@@ -7,16 +7,20 @@ import { Router } from '@angular/router';
     providedIn: 'root'
 })
 export class AuthService {
-    BaseUrl = 'http://127.0.0.1:3000/';
-    UsersUrl = 'http://127.0.0.1:3000/users'
+    // BaseUrl = 'http://127.0.0.1:3000/';
+    BaseUrl='';
+    UsersUrl = this.BaseUrl+'users'
     private token;
     user: User={
         id:null,
         email:null,
+        rank:' ',
+        role:' ',
         
     };
     isLogin = false;
     expiresIn = 120000;
+    isAdmin=false;
     userChange = new BehaviorSubject<User>(null);
     constructor(private http: HttpClient, private router: Router) {
 
@@ -27,18 +31,17 @@ export class AuthService {
     login(user) {
         this.http.post<User>(this.UsersUrl + '/login', user).subscribe(res => {
             this.token = res['token'];
-            
-            this.user = { email: res['user']['email'], id: res['user']['_id'] };
-            console.log(this.token);
-            // this.user.id = res['user']['_id'];
+            console.log(res['user']);
+            this.user = { email: res['user']['email'], id: res['user']['_id'],rank:res['user']['rank'],role:res['user']['role'] };
             this.isLogin = true;
-            console.log(this.user);
-            console.log(res);
+            if(this.user.role==Role.admin){
+                this.isAdmin=true;
+            }
             const expiersInDuration = res['expiresIn'];
             // this.setAuthTimer(expiersInDuration);
             const now = new Date();
             const expirationDate = new Date (now.getTime() + expiersInDuration * 1000)
-            this.saveAuthdata(this.token,expirationDate,this.user.id,this.user.email);
+            this.saveAuthdata(this.token,expirationDate,this.user.id,this.user.email,this.user.rank,this.user.role);
             // this.autoLogout();
             this.router.navigate(['products']);
             this.userChange.next({ ...this.user });
@@ -50,6 +53,8 @@ export class AuthService {
         const email = localStorage.getItem("email")
         const token = localStorage.getItem("token");
         const userId = localStorage.getItem("userId");
+        const rank=localStorage.getItem('rank');
+        const role=localStorage.getItem('role');
 
         const expirationDate = localStorage.getItem("expiration")
         if (!token || !expirationDate){
@@ -60,11 +65,17 @@ export class AuthService {
             token: token,
             expirationDate: new Date(expirationDate),
             userId:userId,
+            rank:rank,
+            role:role
         }
     }
-    saveAuthdata(token,expirationDate,userId,email){
+    saveAuthdata(token,expirationDate,userId,email,rank,role){
 
         localStorage.setItem("email", email );
+        localStorage.setItem("rank", rank );
+        localStorage.setItem("role", role );
+
+
         localStorage.setItem("token", token);
         localStorage.setItem("expiration", expirationDate.toISOString());
         localStorage.setItem("userId",userId);
@@ -74,11 +85,14 @@ export class AuthService {
         localStorage.removeItem('token');
         localStorage.removeItem('expiration');
         localStorage.removeItem('userId');
+        localStorage.removeItem("rank" );
+        localStorage.removeItem("role" );
+
+
 
     }
     autoAuthUser(){
         const AuthInformation =  this.getAuthData();
-        console.log(AuthInformation);
         if (!AuthInformation){
             return
         }
@@ -89,6 +103,9 @@ export class AuthService {
             this.token = AuthInformation.token;
             this.isLogin = true;
             this.user.id=AuthInformation.userId;
+            this.user.email=AuthInformation.email;
+            this.user.rank=AuthInformation.rank;
+            this.user.role=AuthInformation.role;
             this.userChange.next({...this.user});
         }
        }
@@ -97,6 +114,7 @@ export class AuthService {
         this.token = '';
         this.isLogin = false;
         this.user = null;
+        this.isAdmin=false;
         this.clearAuthData();
         this.userChange.next(null);
     }
@@ -115,5 +133,11 @@ export class AuthService {
 export interface User {
     id: String,
     email: String,
-    password?: String
+    password?: String,
+    rank:String,
+    role:String,
+}
+enum Role{
+    admin='admin',
+    normal='normal',
 }

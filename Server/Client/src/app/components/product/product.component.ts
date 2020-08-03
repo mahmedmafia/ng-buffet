@@ -1,3 +1,4 @@
+import { AuthService, User } from 'src/app/services/auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -12,14 +13,26 @@ export class ProductComponent implements OnInit {
 
   query;
   products: Product[];
-  bookSub = new Subscription();
-  constructor(private storeServ: ProductstoreService, private router: Router, private route: ActivatedRoute) {
+  productSub = new Subscription();
+  isAdmin=false;
+  loggedUser:User;
+  isLogin=false;
+  constructor(private storeServ: ProductstoreService, private router: Router, private route: ActivatedRoute,private authServ:AuthService) {
     this.route.queryParams.subscribe(params => { this.query = params['name'] || ''; });
   }
   ngOnInit() {
     this.storeServ.getProducts();
-    this.bookSub = this.storeServ.ProductsChanged.subscribe(res => {
+    this.productSub = this.storeServ.ProductsChanged.subscribe(res => {
       this.products = res;
+    });
+    this.authServ.userChange.subscribe(user=>{
+      if(user!=null){
+        this.loggedUser=user;
+        this.isAdmin=this.authServ.isAdmin;
+      }else{
+        this.isAdmin=false;
+        this.isLogin=false;
+      }
     });
   }
   submit(query) {
@@ -33,7 +46,5 @@ export class ProductComponent implements OnInit {
     // }
     this.storeServ.serachProducts(this.query);
   }
-  deleteBook(id){
-    this.storeServ.deleteProduct(id).subscribe(res=>{console.log('deleted at' + id)});
-  }
+
 }

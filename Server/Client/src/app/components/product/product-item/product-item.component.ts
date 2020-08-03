@@ -16,8 +16,6 @@ export class ProductItemComponent implements OnInit {
     productPrice:null,
     product:null,
     TotalPrice:null,
-    orderId:null,
-    order:null,
     quantitySold:null,
   };
   constructor( private cart:CartService) { }

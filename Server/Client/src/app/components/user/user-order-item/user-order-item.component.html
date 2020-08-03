@@ -1,0 +1,24 @@
+<ul class="list-group"  style="cursor: pointer;" [ngClass]="{'active': showItems}">
+  <ng-container *ngIf="showItems; else elseTemplate" >
+    <li *ngFor="let orderItem of cart.orderItems" class="list-group-item" (click)="showItems=(!showItems)" >
+      <span class="badge badge-primary badge-pill mr-2">{{
+        orderItem.quantitySold
+      }}</span>
+      <b>{{ orderItem.product.name }}</b> For
+      <span class="badge badge-success badge-pill">{{ orderItem.TotalPrice }}$</span>
+    </li>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <li class="list-group-item bg-dark text-white text-center m-auto  col-md-6 col-sm-10" (click)="showItems=!showItems">
+      show {{ cart.orderItems.length }}
+      
+      <ng-container *ngIf="cart.orderItems.length<10 && cart.orderItems.length>1; else elseTemplate">
+          Items
+      </ng-container>
+      <ng-template #elseTemplate>
+       Item   
+      </ng-template>
+      
+    </li>
+  </ng-template>
+</ul>

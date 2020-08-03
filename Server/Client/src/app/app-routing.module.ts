@@ -1,3 +1,6 @@
+import { EditUserComponent } from './components/user/edit-user/edit-user.component';
+import { UserComponent } from './components/user/user.component';
+import { CanLoginGuard } from './components/auth/can-login.guard';
 import { CartComponent } from './components/cart/cart.component';
 import { ProductNewComponent } from './components/product/product-new/product-new.component';
 import { NgModule } from '@angular/core';
@@ -16,12 +19,14 @@ const routes: Routes = [
 
   // { path: 'authors/new', component: NewAuthorComponent },
 
-  { path: 'products/new', component: ProductNewComponent },
+  { path: 'products/new', component: ProductNewComponent,canActivate:[CanLoginGuard] },
 
   // { path: 'books/:id', component: BookDetailsComponent },
   { path: 'user', component: AuthComponent },
   {path:'cart',component:CartComponent},
+  {path:'user/:id',component:UserComponent},
 
+  {path:'user/:id/edit',component:EditUserComponent}
 
 
 ];

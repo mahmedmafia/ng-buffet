@@ -75,7 +75,9 @@ router.post('/login', (req, res) => {
               expiresIn: '3600',
               user: {
                 email: user[0].email,
-                _id: user[0]._id
+                _id: user[0]._id,
+                role:user[0].role,
+                rank:user[0].rank,
               }
             });
           }
